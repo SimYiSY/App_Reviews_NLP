@@ -10,7 +10,7 @@ Users download apps for various purposes. Given that there is a rise in the usag
 
 - How do the app ratings differ across different shopping apps?
 - Is there any specific group of users we can look out for to improve the app?
-- Are there any specific improvement we can work on to further improve user experience of the app?
+- Are there any specific improvement we can work on to further improve user satisfaction of the app?
 
 To explore and answer the above questions, we will scrap reviews from Google Play Store and Apple AppStore and conduct analysis and modelling.
 
@@ -18,7 +18,7 @@ To explore and answer the above questions, we will scrap reviews from Google Pla
 
 The data is webscrapped from the Shopping category in Google Play Store and Apple Appstore, 8 apps reviews were chosen for this project (Amazon, Wish, ASOS, Lazada, Ebay, Shoppee, AliExpress, Carousell). The data used was exclusive dated in 2020 only as majority of the data scrapped are from in 2020. Data cleaning was done by removing stopwords, lemmatized and Vectorized to the raw data to create bag-of-words. 
 
-There will be 3 steps to our modelling process, with the first step classifying whether the text is a good or bad review, followed by classifying the reviews into categories created through topic modelling to group them into different subgroups.
+There will be 2 steps to our modelling process, with the first step classifying whether the text is a good or bad review, followed by classifying the reviews into categories created through topic modelling to group them into different subgroups.
 
 A few classification model were used, namely LogisticRegression, MultinomialNB, SGDClassifier, RandomForest, ADABoost. LogisticRegression give us the best results in classifying our data and thus used as the final model. 
 
@@ -66,6 +66,7 @@ As the data set is quite big, RandomizedSearch was used instead of Gridsearch to
 |neu_score|float64|0 - 1|Neutral score of review using VaderSentiment|
 |pos_score|float64|0 - 1|Positive score of review using VaderSentiment|
 |compound_score|float64|(-1) - 1|Compound score of review using VaderSentiment|
+|language|object|nil|Language type of review|
 |month|int64|1 - 12|Month review was posted|
 |dayofweek|int64|1 - 7|Day of the week review was posted|
 |hour|int64|0 - 23|Hour review was posted|
@@ -76,14 +77,16 @@ As the data set is quite big, RandomizedSearch was used instead of Gridsearch to
 |rate|int64|0 / 1|Rate of Good/Bad Reviews|
 
 ### Key Findings
-- Good Reviews are mostly on Good User Experience and Convenient Service
-- Bad reviews are mostly on User Interface Issues, Refund issues and Seller issues
+- Bad reviews tend to have more word count as compared to Good reviews
+- More negative reviews are seen in 9am - 3pm period
+- More negative reviews on Tuesdays
+- Good Reviews are mostly on Convenient App and User Interface
+- Bad reviews are mostly on User Interface, App Issues and Purchase Experience
 - There is more negative reviews in 9am - 3pm period, and on Tuesdays
 - There is quite a number of reviews being 1 word, or otherwise rated wrongly by the user, (e.g. review: Excellent, Rating: 1)
-- Unsatisfied in app event is rated lower on Wednesday
-- poor user experience, bad experience with seller and payment issue has lower scores on Friday
-- Unsatisfied In-app events seems to have a dip in negative rating every alternate month(2,4,6,8)
-- Base on compound scores, Bad Seller reviews tend to be very low as compared to other categories.
+- Delivery seems to have a dip in rating from March to April.
+- Refund is consistently low for Negative Reviews
+- Base on compound scores, Delivery and Product tend to be very low as compared to other categories.
 
 ### Metrics
 Using the following metrics to evaluate the models:
@@ -100,29 +103,38 @@ Using the following metrics to evaluate the models:
 ### Final Results
 **Classification (Good & Bad Reviews)**
 - LogisticRegression
-  - Train data AUC: 0.965
-  - Test data AUC: 0.969
-  - MCC Score: 0.775
-  
+  - Train data AUC: 0.966
+  - Test data AUC: 0.965
+  - MCC Score: 0.773
+- Convolutional Neural Network
+  - Train data AUC: 0.977
+  - Test data AUC: 0.961
+  - MCC Score: 0.767
   
 **Multi Classification (Bad Review categories)**
 - LogisticRegression
-    - Train Data f1 weighted score: 0.796	
-    - Test Data f1 weighted score: 0.801	
-    - MCC Score: 0.769	
-    - Kappa Score: 0.768
-
+    - Train Data f1 weighted score: 0.716	
+    - Test Data f1 weighted score: 0.749	
+    - MCC Score: 0.713	
+    - Kappa Score: 0.712
+- Convolutional Neural Network
+  - Train data Acciracy: 0.977
+  - Test data Accuracy: 0.701
+  - MCC Score: 0.657
+  - Kappa Score: 0.657 
 
 **Multi Classification (Good Review categories)**
 - LogisticRegression
-    - Train Data f1 weighted score: 0.937	
-    - Test Data f1 weighted score: 0.944	
-    - MCC Score: 0.907	
-    - Kappa Score: 0.906
+    - Train Data f1 weighted score: 0.868	
+    - Test Data f1 weighted score: 0.878	
+    - MCC Score: 0.851	
+    - Kappa Score: 0.850
 
 **Model Remarks**
 - From the misclassified post we can see the some comments are rated wrongly if we were to just look at the reviews directly.
-- Foreign languages that are not English(e.g malay) is present in the data, which is difficult for the model to predict.
+- Some of the reviews are predicted wrongly. After looking at some of the reviews, it is clear that there are some misclassification by the topic modelling.
+- It can be seen that the model is actually predicting better then what was classified in the first place.
+- Some of the topics are very closely related to one another, which make it harder for the model to predict correctly
 
 ### Limitations
 - The data set is mostly collected in the month of August and September, which means the model is able to predict this period better, but not in predicting past data. 
