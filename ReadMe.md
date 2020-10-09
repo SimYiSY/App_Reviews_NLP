@@ -35,6 +35,7 @@ As the data set is quite big, RandomizedSearch was used instead of Gridsearch to
   - Lemmatization
   - Compound score calculation using VaderSentiment
 - EDA
+- - Check for wrongly Rated reviews
   - Plotting distribution of features
   - Topic modelling of good reviews
   - Topic modelling of bad reviews
@@ -71,19 +72,23 @@ As the data set is quite big, RandomizedSearch was used instead of Gridsearch to
 |minute|int64|1 - 60|minute review was posted|
 |text_len|int64|nil|total number or letters in review|
 |word_count|int64|nil|total number of words in reivew|
-|category|object|10 topics|Categories generated from topic modelling|
+|category|object|20 topics|Categories generated from topic modelling|
 |rate|int64|0 / 1|Rate of Good/Bad Reviews|
 
 ### Key Findings
-- Most complains are on Bad User Experience, while most good reviews are on the good overall service of the App, which is rather vague
+- Good Reviews are mostly on Good User Experience and Convenient Service
+- Bad reviews are mostly on User Interface Issues, Refund issues and Seller issues
 - There is more negative reviews in 9am - 3pm period, and on Tuesdays
 - There is quite a number of reviews being 1 word, or otherwise rated wrongly by the user, (e.g. review: Excellent, Rating: 1)
-- The multiclass model seems to be predicting better compared to what the topic modeling originally set the topic was, which is quite interesting as the model is able to differentiate the categories clearly base on the keywords.
+- Unsatisfied in app event is rated lower on Wednesday
+- poor user experience, bad experience with seller and payment issue has lower scores on Friday
+- Unsatisfied In-app events seems to have a dip in negative rating every alternate month(2,4,6,8)
+- Base on compound scores, Bad Seller reviews tend to be very low as compared to other categories.
 
 ### Metrics
 Using the following metrics to evaluate the models:
 - ROC AUC curve(for Binary Classification)
-  -  The ROC AUC cruve is able to tell how much model is capable of distinguishing between classes.ranging from 0 to 1, with 1 being perfectly classified.
+  -  The ROC AUC curve is able to tell how much the model is capable of distinguishing between 0 and 1, with 1 being perfectly classified.
 - MCC Score
   - The Matthews correlation coefficient (MCC), instead, is a more reliable statistical rate which produces a high score only if the prediction obtained good results in all of the four confusion matrix categories (true positives, false negatives, true negatives, and false positives), proportionally both to the size of positive elements and the size of negative elements in the dataset.
 - Kappa Score(For multiclassification)
@@ -95,17 +100,17 @@ Using the following metrics to evaluate the models:
 ### Final Results
 **Classification (Good & Bad Reviews)**
 - LogisticRegression
-  - Train data AUC: 0.947
-  - Test data AUC: 0.945
-  - MCC Score: 0.729
+  - Train data AUC: 0.965
+  - Test data AUC: 0.969
+  - MCC Score: 0.775
   
   
 **Multi Classification (Bad Review categories)**
 - LogisticRegression
-    - Train Data f1 weighted score: 0.867	
-    - Test Data f1 weighted score: 0.862	
-    - MCC Score: 0.798336	
-    - Kappa Score: 0.796888
+    - Train Data f1 weighted score: 0.796	
+    - Test Data f1 weighted score: 0.801	
+    - MCC Score: 0.769	
+    - Kappa Score: 0.768
 
 
 **Multi Classification (Good Review categories)**
@@ -114,6 +119,10 @@ Using the following metrics to evaluate the models:
     - Test Data f1 weighted score: 0.944	
     - MCC Score: 0.907	
     - Kappa Score: 0.906
+
+**Model Remarks**
+- From the misclassified post we can see the some comments are rated wrongly if we were to just look at the reviews directly.
+- Foreign languages that are not English(e.g malay) is present in the data, which is difficult for the model to predict.
 
 ### Limitations
 - The data set is mostly collected in the month of August and September, which means the model is able to predict this period better, but not in predicting past data. 
