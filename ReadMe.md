@@ -77,16 +77,34 @@ As the data set is quite big, RandomizedSearch was used instead of Gridsearch to
 |rate|int64|0 / 1|Rate of Good/Bad Reviews|
 
 ### Key Findings
-- Bad reviews tend to have more word count as compared to Good reviews
-- More negative reviews are seen in 9am - 3pm period
-- More negative reviews on Tuesdays
-- Good Reviews are mostly on Convenient App and User Interface
-- Bad reviews are mostly on User Interface, App Issues and Purchase Experience
-- There is more negative reviews in 9am - 3pm period, and on Tuesdays
-- There is quite a number of reviews being 1 word, or otherwise rated wrongly by the user, (e.g. review: Excellent, Rating: 1)
-- Delivery seems to have a dip in rating from March to April.
-- Refund is consistently low for Negative Reviews
-- Base on compound scores, Delivery and Product tend to be very low as compared to other categories.
+
+- How do the app ratings differ across different shopping apps?
+    - Users the wants to give a bad review will tend to just give a 1 rating
+    - Users that wants to give a good review will tend to just give a 5 rating
+    - Amazon seems to take the lead in having more bad reviews as compared to the other apps, especially App Issues , User interface and Account issues
+    - Wish has slightly higher negative delivery issue reviews
+    - AliExpress has High Refund issues. 
+    - Shoppee takes the lead in Convenient app while ASOS takes the lead for User Interface
+    - Bad reviews tend to have more word count as compared to Good reviews
+    - More negative reviews are seen in 9am - 3pm period
+    - More negative reviews on Tuesdays
+    - Good Reviews are mostly on Convenient App and User Interface
+    - Bad reviews are mostly on User Interface, App Issues and Purchase Experience
+    - There is more negative reviews in 9am - 3pm period, and on Tuesdays
+    - There is quite a number of reviews being 1 word, or otherwise rated wrongly by the user, (e.g. review: Excellent, Rating: 1)
+- Is there any specific group of users we can look out for to improve the app?
+    - The categories for Good Reviews are:  Convenient App, User Interface, Variety & Price, User Experience, Shopping Experience, Delivery, Consumer Satisfaction, In-App Actitives, Recommendations, Customer Service
+    - The categories for Bad Reviews are:  Account Issues, Poor Seller Feedback, User Interface, Payment Issue, Poor Customer Service, Product Issue, App Issues, Delivery Issue, Refund, Product Listing Issues
+- Are there any specific improvement we can work on to further improve user satisfaction of the app?
+    - Ratings for Refund seems to take a dip in March
+    - Ratings for Refund and Poor Seller Feedback is consistently low across the week.
+    - Consumer Satisfaction is always going lower as compared to other topics in the good reviews sector
+    - Customer Service and Consumer satisfaction is consistently lower in the week compared to other categories in good reviews
+    - Delivery, Consumer Satisfaction and Recommendations are scored lower in good reviews.
+    - Poor Seller feedback and refunds are scored lower in bad reviews
+    - Base on compound scores, Delivery and Product tend to be very low as compared to other categories.
+    - To summarise, it is important to look into customer satisfaction for the app, where Customer Service, Refund, Delivery and Recommendations are import factors to look out for. 
+    - It is also important to put some focus on sellers that are doing bad on the platform.
 
 ### Metrics
 Using the following metrics to evaluate the models:
@@ -113,15 +131,15 @@ Using the following metrics to evaluate the models:
   
 **Multi Classification (Bad Review categories)**
 - LogisticRegression
-    - Train Data f1 weighted score: 0.716	
-    - Test Data f1 weighted score: 0.749	
-    - MCC Score: 0.713	
-    - Kappa Score: 0.712
+    - Train Data f1 weighted score: 0.731
+    - Test Data f1 weighted score: 0.741	
+    - MCC Score: 0.705	
+    - Kappa Score: 0.704
 - Convolutional Neural Network
-  - Train data Acciracy: 0.977
-  - Test data Accuracy: 0.701
-  - MCC Score: 0.657
-  - Kappa Score: 0.657 
+  - Train data Acciracy: 0.914
+  - Test data Accuracy: 0.717
+  - MCC Score: 0.679
+  - Kappa Score: 0.679 
 
 **Multi Classification (Good Review categories)**
 - LogisticRegression
@@ -129,6 +147,11 @@ Using the following metrics to evaluate the models:
     - Test Data f1 weighted score: 0.878	
     - MCC Score: 0.851	
     - Kappa Score: 0.850
+- Convolutional Neural Network
+  - Train data Acciracy: 0.941
+  - Test data Accuracy: 0.841
+  - MCC Score: 0.805
+  - Kappa Score: 0.657 
 
 **Model Remarks**
 - From the misclassified post we can see the some comments are rated wrongly if we were to just look at the reviews directly.
