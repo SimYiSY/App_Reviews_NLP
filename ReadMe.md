@@ -158,6 +158,7 @@ Using the following metrics to evaluate the models:
 - Some of the reviews are predicted wrongly. After looking at some of the reviews, it is clear that there are some misclassification by the topic modelling.
 - It can be seen that the model is actually predicting better then what was classified in the first place.
 - Some of the topics are very closely related to one another, which make it harder for the model to predict correctly
+- Deep Learning Models are performing worst then Machine learning models, which could be due to the lack of complexity of the data for Neural Network to work well.
 
 ### Limitations
 - The data set is mostly collected in the month of August and September, which means the model is able to predict this period better, but not in predicting past data. 
@@ -165,6 +166,7 @@ Using the following metrics to evaluate the models:
 
 ### Further research
 - Try to use Compound score gathered from VaderSentiment to do the classification instead, as we know there is some misclassified post by users. which hopefully give us a better accuracy.
+- Try different categories, not just shopping app category apps, do create a more complete review prediction model
 
 ### Content
 1. Webscrap data
