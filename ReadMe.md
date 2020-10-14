@@ -112,9 +112,6 @@ Using the following metrics to evaluate the models:
   -  The ROC AUC curve is able to tell how much the model is capable of distinguishing between 0 and 1, with 1 being perfectly classified.
 - MCC Score
   - The Matthews correlation coefficient (MCC), instead, is a more reliable statistical rate which produces a high score only if the prediction obtained good results in all of the four confusion matrix categories (true positives, false negatives, true negatives, and false positives), proportionally both to the size of positive elements and the size of negative elements in the dataset.
-- Kappa Score(For multiclassification)
-  - Cohen’s Kappa is a quantitative measure of reliability for two raters that are rating the same thing, corrected for how often that the raters may agree by chance. ranging from 0 to 1, with 1 being good.
-  
 - f1 score weighted
   - The F1 Scores are calculated for each label and then their average is weighted by support - which is the number of true instances for each label. It can result in an F-score that is not between precision and recall
 
@@ -134,24 +131,20 @@ Using the following metrics to evaluate the models:
     - Train Data f1 weighted score: 0.731
     - Test Data f1 weighted score: 0.741	
     - MCC Score: 0.705	
-    - Kappa Score: 0.704
 - Convolutional Neural Network
   - Train data Acciracy: 0.914
   - Test data Accuracy: 0.717
   - MCC Score: 0.679
-  - Kappa Score: 0.679 
 
 **Multi Classification (Good Review categories)**
 - LogisticRegression
     - Train Data f1 weighted score: 0.868	
     - Test Data f1 weighted score: 0.878	
     - MCC Score: 0.851	
-    - Kappa Score: 0.850
 - Convolutional Neural Network
   - Train data Acciracy: 0.941
   - Test data Accuracy: 0.841
   - MCC Score: 0.805
-  - Kappa Score: 0.657 
 
 **Model Remarks**
 - From the misclassified post we can see the some comments are rated wrongly if we were to just look at the reviews directly.
