@@ -34,21 +34,25 @@ def prediction(reviews):
 
     prediction = classifier_1.predict(
         [reviews])
-    print(prediction)
     return prediction
 
 def prediction_bad(reviews):
+    p_df = pd.DataFrame([classifier_2.classes_,
+                        classifier_2.predict_proba([reviews])[0]],
+                        index = ['topic', 'proba']).T.sort_values(by = 'proba',
+                        ascending = False)
 
-    prediction = classifier_2.predict(
-        [reviews])
-    print(prediction)
+    prediction = p_df[p_df.proba > 0.1]['topic'].values[:].tolist()
     return prediction
 
 def prediction_good(reviews):
 
-    prediction = classifier_3.predict(
-        [reviews])
-    print(prediction)
+    p_df = pd.DataFrame([classifier_3.classes_,
+                        classifier_3.predict_proba([reviews])[0]],
+                        index = ['topic', 'proba']).T.sort_values(by = 'proba',
+                        ascending = False)
+
+    prediction = p_df[p_df.proba > 0.1]['topic'].values[:].tolist()
     return prediction
 
 
@@ -74,7 +78,7 @@ def analyse():
         sen = sp(rawtext)
 
         colors = {"ORG": "linear-gradient(#00FFF8, #95D0E6, #009CD7)"}
-        options = {"ents": ["ORG"], "colors": colors}
+        options = {"ents": None, "colors": colors}
         displaysen = displacy.render(sen, style = 'ent', options=options)
 
         received_text = sen
@@ -93,10 +97,10 @@ def analyse():
         result = prediction(rawtext)
         if result == 1:
             result = 'Good Review'
-            final = prediction_good(rawtext)[0]
+            final = prediction_good(rawtext)
         else:
             result = 'Bad Review'
-            final = prediction_bad(rawtext)[0]
+            final = prediction_bad(rawtext)
 
 
         nouns = list()
@@ -111,21 +115,21 @@ def analyse():
                 for item in ran_words:
                     word = Word(item).pluralize()
                     final_word.append(word)
-        summary = final_word
-        end = time.time()
-        final_time.append(round(end-start, 2))
+                summary = final_word
+    end = time.time()
+    final_time.append(round(end-start, 2))
 
     return render_template('index.html', received_text = received_text,
-                                        number_of_tokens = number_of_tokens,
-                                        displaysen = displaysen,
-                                        neg = neg,
-                                        pos = pos,
-                                        neu = neu,
-                                        compound = compound,
-                                        result = result,
-                                        final = final,
-                                        summary = summary,
-                                        final_time = final_time[0])
+                                            number_of_tokens = number_of_tokens,
+                                            displaysen = displaysen,
+                                            neg = neg,
+                                            pos = pos,
+                                            neu = neu,
+                                            compound = compound,
+                                            result = result,
+                                            final = final,
+                                            summary = summary,
+                                            final_time = final_time[0])
 
 
 if __name__ == '__main__':

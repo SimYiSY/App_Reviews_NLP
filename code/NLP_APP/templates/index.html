@@ -61,13 +61,15 @@
 </div> </h5>
       <p style = "text-align:center"><font size="7" color="#2DC1DF">{{result}}</font></p>
     <div class="card-text">
-    	<h5>Your Text</h5>
+    	<h4>Original Text</h4>
     	{{ displaysen|markdown }}
     	<hr/>
 <br/>
 <p>Time Elapsed: <span style="color:#0091EA;">{{ final_time }} </span> seconds to analyse</p>
     <p>This text is about:</p>
-    <p style = "text-align:center"><font size="7" color="#2DC1DF">{{final}}</font></p>
+		{%for i in final%}
+    <p style = "text-align:center"><font size="5" color="#2DC1DF">{{i}}</font></p>
+		{%endfor%}
     <p>Keywords</p>
         {%for i in summary%}
         <li>{{i}}</li>
