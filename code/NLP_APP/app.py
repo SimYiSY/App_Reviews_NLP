@@ -66,7 +66,11 @@ Markdown(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    sen = sp('')
+    colors = {"ORG": "linear-gradient(#00FFF8, #95D0E6, #009CD7)"}
+    options = {"ents": None, "colors": colors}
+    displaysen = displacy.render(sen, style = 'ent', options=options)
+    return render_template('index.html', displaysen = displaysen)
 
 @app.route('/analyse', methods = ['POST'])
 def analyse():
@@ -120,16 +124,16 @@ def analyse():
     final_time.append(round(end-start, 2))
 
     return render_template('index.html', received_text = received_text,
-                                            number_of_tokens = number_of_tokens,
-                                            displaysen = displaysen,
-                                            neg = neg,
-                                            pos = pos,
-                                            neu = neu,
-                                            compound = compound,
-                                            result = result,
-                                            final = final,
-                                            summary = summary,
-                                            final_time = final_time[0])
+                                         number_of_tokens = number_of_tokens,
+                                         displaysen = displaysen,
+                                         neg = neg,
+                                         pos = pos,
+                                         neu = neu,
+                                         compound = compound,
+                                         result = result,
+                                         final = final,
+                                         summary = summary,
+                                         final_time = final_time[0])
 
 
 if __name__ == '__main__':
