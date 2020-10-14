@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, url_for
 from flask_bootstrap import Bootstrap
+from flaskext.markdown import Markdown
 
 
 
 #NLP
 from textblob import Word
 import spacy
+from spacy import displacy
 from spacymoji import Emoji
 import pandas as pd
 import numpy as np
@@ -56,7 +58,7 @@ sp.add_pipe(emoji, first = True)
 
 app = Flask(__name__)
 Bootstrap(app)
-
+Markdown(app)
 
 @app.route('/')
 def index():
@@ -70,6 +72,11 @@ def analyse():
         rawtext = request.form['rawtext']
         #NLP stuff
         sen = sp(rawtext)
+
+        colors = {"ORG": "linear-gradient(#00FFF8, #95D0E6, #009CD7)"}
+        options = {"ents": ["ORG"], "colors": colors}
+        displaysen = displacy.render(sen, style = 'ent', options=options)
+
         received_text = sen
         number_of_tokens = len(list(sen))
 
@@ -110,6 +117,7 @@ def analyse():
 
     return render_template('index.html', received_text = received_text,
                                         number_of_tokens = number_of_tokens,
+                                        displaysen = displaysen,
                                         neg = neg,
                                         pos = pos,
                                         neu = neu,
