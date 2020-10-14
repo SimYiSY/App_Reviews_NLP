@@ -59,7 +59,11 @@
         <h5 class="card-title"><div class="alert alert-primary" role="alert">
   This text has {{number_of_tokens}} tokens with {{len_of_words}} important point
 </div> </h5>
+			{% if result == 'Good Review'%}
       <p style = "text-align:center"><font size="7" color="#2DC1DF"><b>{{result}}</b></font></p>
+			{% else %}
+			<p><img src="https://image.freepik.com/free-vector/cartoon-delivery-man-brings-goods-customer-from-laptop-vector-illustration-concept-with-online-shopping-services_46527-344.jpg" /></p>
+			{%endif%}
     <div class="card-text">
     	<h4>Original Text</h4>
     	{{ displaysen|markdown }}

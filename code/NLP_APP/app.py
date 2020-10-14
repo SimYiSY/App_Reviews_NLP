@@ -15,7 +15,7 @@ import pickle
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import random
 import time
-
+from IPython.display import Image
 
 # loading in the models to predict on the data
 pickle_in_1 = open('../model_pickles/Best_Model_P1.sav', 'rb')
@@ -125,6 +125,7 @@ def analyse():
 
     return render_template('index.html', received_text = received_text,
                                          number_of_tokens = number_of_tokens,
+                                         len_of_words = len_of_words,
                                          displaysen = displaysen,
                                          neg = neg,
                                          pos = pos,
