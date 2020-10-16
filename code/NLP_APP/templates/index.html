@@ -62,7 +62,8 @@
 			{% if result == 'Good Review'%}
       <p style = "text-align:center"><img src="https://raw.githubusercontent.com/SimYiSY/App_Reviews_NLP/master/code/NLP_APP/good.png"/></p>
 			<h3 style = "text-align:center">This Review is Good</h3>
-			{% else %}
+			{% endif%}
+			{% if result == 'Bad Review' %}
 			<p style = "text-align:center"><img src="https://raw.githubusercontent.com/SimYiSY/App_Reviews_NLP/master/code/NLP_APP/bad.png"/></p>
 			<h3 style = "text-align:center">This Review is Bad</h3>
 			{%endif%}
